@@ -10,23 +10,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sonik2155/express-mesto.git"
+    "url": "git+https://github.com/Elizaveta-1207/express-mesto.git"
   },
-  "author": "Vadik Kolesnikof",
+  "keywords": [],
+  "author": "Timonina Elizaveta",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sonik2155/express-mesto/issues"
+    "url": "https://github.com/Elizaveta-1207/express-mesto/issues"
   },
-  "homepage": "https://github.com/sonik2155/express-mesto#readme",
+  "homepage": "https://github.com/Elizaveta-1207/express-mesto#readme",
   "devDependencies": {
-    "eslint": "^7.14.0",
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1",
     "nodemon": "^2.0.6"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
     "express": "^4.17.1",
-    "mongoose": "^5.11.7"
+    "mongoose": "^5.11.9"
   }
 }

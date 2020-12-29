@@ -1,38 +1,37 @@
-const mongoose = require('mongoose');
+/* eslint-disable no-useless-escape */
+const mongoose = require("mongoose");
 
 const regex = /https?:\/\/([\/\w.-]+)/;
 
 const cardSchema = new mongoose.Schema({
-name: {
-  type: String,
-  require: true,
-  minlength: 2,
-  maxlength: 30
-},
-link: {
-  type: String,
-  require: true,
-  minlength: 2,
-  maxlength: 30,
-  validate: {
-    validator(v) {
-      return regex.test(v)
+  name: {
+    type: String,
+    required: true,
+    minlength: 2,
+    maxlength: 30,
+  },
+  link: {
+    type: String,
+    required: true,
+    validate: {
+      validator(v) {
+        return regex.test(v);
+      },
+      message: "This link is not valid!", // когда validator вернёт false, будет использовано это сообщение
     },
-    message: "This link is not valid!",
-  }
-},
-owner: {
+  },
+  owner: {
     type: mongoose.Schema.Types.ObjectId,
-    require: true,
-},
-likes: {
-  require: Array,
-  type: [{type: mongoose.Schema.Types.ObjectId}]
-},
-createdAt: {
-type: Date,
-default: Date.now
-}
+    required: true,
+  },
+  likes: {
+    type: [{ type: mongoose.Schema.Types.ObjectId }],
+    default: [],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-module.exports = mongoose.model('card ', cardSchema);
+module.exports = mongoose.model("card", cardSchema);
