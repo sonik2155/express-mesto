@@ -8,7 +8,7 @@ module.exports.getUsers = (req, res) => {
     );
 };
 
-module.exports.getUserInformation = (req, res) => {
+module.exports.getUser = (req, res) => {
   User.findById(req.params._id)
     .orFail(() => {
       const error = new Error("CastError");
@@ -40,3 +40,38 @@ module.exports.createUser = (req, res) => {
     });
 };
 
+module.exports.updateUser = (req, res) => {
+  const { name, about } = req.body;
+  User.findByIdAndUpdate(req.user._id, { name, about }, { new: true })
+    .orFail(() => {
+      const error = new Error("CastError");
+      error.statusCode = 404;
+      throw error;
+    })
+    .then((user) => res.send(user))
+    .catch((err) => {
+      if (err.statusCode === 404) {
+        res.status(404).send({ message: "Нет пользователя с таким id" });
+        return;
+      }
+      res.status(500).send({ message: "Запрашиваемый ресурс не найден" });
+    });
+};
+
+module.exports.updateAvatar = (req, res) => {
+  const { avatar } = req.body;
+  User.findByIdAndUpdate(req.user._id, { avatar }, { new: true })
+    .orFail(() => {
+      const error = new Error("CastError");
+      error.statusCode = 404;
+      throw error;
+    })
+    .then((user) => res.send(user))
+    .catch((err) => {
+      if (err.statusCode === 404) {
+        res.status(404).send({ message: "Нет пользователя с таким id" });
+        return;
+      }
+      res.status(500).send({ message: "Запрашиваемый ресурс не найден" });
+    });
+};

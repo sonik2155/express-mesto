@@ -43,3 +43,52 @@ module.exports.deleteCard = (req, res) => {
     });
 };
 
+module.exports.likeCard = (req, res) => {
+  Card.findByIdAndUpdate(
+    req.params._id,
+    { $addToSet: { likes: req.user._id } },
+    { new: true }
+  )
+    .orFail(() => {
+      const error = new Error("CastError");
+      error.statusCode = 404;
+      throw error;
+    })
+    .then((card) => res.send(card))
+    .catch((err) => {
+      console.log(err);
+      if (err.statusCode === 404) {
+        res.status(404).send({
+          message:
+            "Карточки с таким id не существует, невозможно проставить лайк",
+        });
+        return;
+      }
+      res.status(500).send({ message: "Запрашиваемый ресурс не найден" });
+    });
+};
+
+module.exports.dislikeCard = (req, res) => {
+  Card.findByIdAndUpdate(
+    req.params._id,
+    { $pull: { likes: req.user._id } },
+    { new: true }
+  )
+    .orFail(() => {
+      const error = new Error("CastError");
+      error.statusCode = 404;
+      throw error;
+    })
+    .then((card) => res.send(card))
+    .catch((err) => {
+      console.log(err.name);
+      console.log(12345);
+      if (err.statusCode === 404) {
+        res.status(404).send({
+          message: "Карточки с таким id не существует, невозможно забрать лайк",
+        });
+        return;
+      }
+      res.status(500).send({ message: "Запрашиваемый ресурс не найден" });
+    });
+};
